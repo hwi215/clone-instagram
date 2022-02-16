@@ -1,7 +1,8 @@
 // (1) 회원정보 수정
 function update(userId, event) {
 	event.preventDefault(); // 폼태그 액션을 막기!!
-	
+
+	// header 파일에 제이쿼리 정의함
 	let data = $("#profileUpdate").serialize(); // key=value
 	
 	console.log(data);

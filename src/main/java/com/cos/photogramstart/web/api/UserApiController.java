@@ -28,8 +28,9 @@ import com.cos.photogramstart.web.dto.user.UserUpdateDto;
 
 import lombok.RequiredArgsConstructor;
 
+// 회원가입 수정(제출 버튼 클릭시 update() 호출됐을 때 수정사항 처리하기)
 @RequiredArgsConstructor
-@RestController
+@RestController // 데이터로 응답
 public class UserApiController {
 	
 	private final UserService userService;
@@ -51,9 +52,9 @@ public class UserApiController {
 		return new ResponseEntity<>(new CMRespDto<>(1, "구독자 정보 리스트 가져오기 성공", subscribeDto), HttpStatus.OK);
 	}
 	
-	
+	// updqte 잘 됐는지 확인
 	@PutMapping("/api/user/{id}")
-	public CMRespDto<?> update(
+	public CMRespDto<?> update( // 위치 중요
 			@PathVariable int id, 
 			@Valid UserUpdateDto userUpdateDto,
 			BindingResult bindingResult, // 꼭 @Valid 가 적혀있는 다음 파라메터 적어야됨
@@ -62,6 +63,16 @@ public class UserApiController {
 			User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
 			principalDetails.setUser(userEntity); // 세션 정보 변경
 			return new CMRespDto<>(1, "회원수정완료", userEntity); // 응답시에 userEntity의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.
-		
+
 	}
+
+	/* // 회원정보 수정 데이터 잘 받음
+	@PutMapping("/api/user/{id}")
+	public String update(@PathVariable int id, UserUpdateDto userUpdateDto){
+		System.out.println(userUpdateDto);
+		return "OK";
+	}
+
+	 */
+
 }

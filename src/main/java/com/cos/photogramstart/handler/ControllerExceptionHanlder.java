@@ -38,7 +38,8 @@ public class ControllerExceptionHanlder {
 		return Script.back(e.getMessage());
 	}
 
-	// 유효성 검사 실패시 처리방법 경우2) CMRespDto
+	// 34강
+	// 유효성 검사 실패시 처리방법 경우2) ? = CMRespDto
 	// 어떤 타입을 넣을 지 모르면 <?>
 	@ExceptionHandler(CustomValidationApiException.class)
 	public ResponseEntity<?> validationApiException(CustomValidationApiException e) {

@@ -17,7 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
-	
+
+
 	@GetMapping("/user/{pageUserId}")
 	public String profile(@PathVariable int pageUserId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		UserProfileDto dto = userService.회원프로필(pageUserId, principalDetails.getUser().getId());
@@ -29,7 +30,9 @@ public class UserController {
 		/auth/login -> username이 존재하면? -> PrincipalDetails에서 세션 저장
 		-> autnentication에 접근(AuthenticationPrincipal 어노테이션 이용) -> 세션 접근!!
  	*/
+
 	// 회원 정보 변경
+	// model에 담아서 세션정보 보내기-> pom.xml에서 처리했으므로(시큐리티 태그 라이브러리, header)할 필요 없음!
 	@GetMapping("/user/{id}/update")
 	public String updateForm(@PathVariable int id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
 		// 1. 추천

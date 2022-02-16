@@ -48,7 +48,7 @@
 			<version>2.1.1</version>
 		</dependency>
 
-		<!-- 시큐리티 태그 라이브러리 -->
+		<!-- 시큐리티 태그 라이브러리(인증된 정보(세션)에 쉽게 접근하기 위해), jsp일 때만 사용 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
