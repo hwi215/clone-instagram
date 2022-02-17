@@ -24,11 +24,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(
+@Table( // 유니크하게 만들기(1번이 2번 구독, 2번이 1번 구독 하는 중복상황을 막기 위해)
 		uniqueConstraints = {
 				@UniqueConstraint(
 						name="subscribe_uk",
-						columnNames = {"fromUserId", "toUserId"}
+						columnNames = {"fromUserId", "toUserId"} // 2개를 유니크하게 만들기
 				)
 		}
 )
@@ -37,13 +37,13 @@ public class Subscribe {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@JoinColumn(name = "fromUserId") // 이렇게 컬럼명 만들어! 니 맘대로 만들지 말고!!
-	@ManyToOne
-	private User fromUser;
+	@JoinColumn(name = "fromUserId") // 스키마 변경: DB에서 언더바 방식(fromUser_id) 맘에 안들어서 바꿈 (이렇게 컬럼명 만들어! 니 맘대로 만들지 말고!!)
+	@ManyToOne // 자동으로 테이블 생성 N : 1 (ORM 방식: entity를 받아 바로 테이블로 만들어줌)
+	private User fromUser; // 구독 하는 user
 	
 	@JoinColumn(name = "toUserId")
 	@ManyToOne
-	private User toUser;
+	private User toUser; // 구독 받는 user
 	
 	private LocalDateTime createDate;
 	

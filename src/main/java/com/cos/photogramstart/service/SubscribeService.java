@@ -51,14 +51,17 @@ public class SubscribeService {
 		return subscribeDtos;
 	}
 	
-	
-	@Transactional
+
+	@Transactional // DB에 영향을 주기 때문에
 	public void 구독하기(int fromUserId, int toUserId) {
 		try {
 			subscribeRepository.mSubscribe(fromUserId, toUserId);
 		} catch (Exception e) {
-			throw new CustomApiException("이미 구독을 하였습니다.");
+			throw new CustomApiException("이미 구독을 하였습니다."); // 핸들러에서 처리
 		}
+		// save를 이용하려면 객체가 int로 정의되어있어야 하는데,
+		// subscribe는 User로(오브젝트로) 정의 되어있으므로 이렇게 하지 말고 직접 네이티브 커리를 짜자(SubscribeRepository에 짜기!)
+		//subscribeRepository.save(null);
 	}
 	
 	@Transactional
