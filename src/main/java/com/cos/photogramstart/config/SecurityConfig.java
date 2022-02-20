@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration // IoC     
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-	private final OAuth2DetailsService oAuth2DetailsService;
+	private final OAuth2DetailsService oAuth2DetailsService; // 페이스북 로그인
 	
 	@Bean // 암호화
 	public BCryptPasswordEncoder encode() {
@@ -40,13 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.antMatchers("/", "/user/**", "/image/**", "/subscribe/**", "/comment/**", "/api/**").authenticated()
 			.anyRequest().permitAll()
 			.and()
-			.formLogin()
+			.formLogin()// 폼 로그인
 			.loginPage("/auth/signin") // GET 요청시(회원가입시 로그인 화면으로 이동)
 			.loginProcessingUrl("/auth/signin") // POST -> 스프링 시큐리티가 로그인 프로세스 진행(로그인)
 			.defaultSuccessUrl("/")
 			.and()
-			.oauth2Login() // form로그인도 하는데, oauth2로그인도 할꺼야!!
-			.userInfoEndpoint() // oauth2로그인을 하면 최종응답을 회원정보를 바로 받을 수 있다.
+			.oauth2Login() // oauth2로그인 추가(페이스북)
+			.userInfoEndpoint() // oauth2로그인을 하면 최종응답을 회원정보를 바로! 받을 수 있다.(엔드포인트로 받는 것이 아니라 회원정보로 바로 받기)
 			.userService(oAuth2DetailsService);
 	}
 

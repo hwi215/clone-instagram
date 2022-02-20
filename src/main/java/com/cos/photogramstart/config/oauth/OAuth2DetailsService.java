@@ -25,19 +25,25 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService{
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 		//System.out.println("OAuth2 서비스 탐");
+		// 응답 정보를 파싱하여 제공해 줌
 		OAuth2User oauth2User = super.loadUser(userRequest);
 		//System.out.println(oauth2User.getAttributes());
-		
+
+		//getAttributes의 리턴타입이 Map이므로
 		Map<String, Object> userInfo = oauth2User.getAttributes();
-		
+
+		// username, password 정보는 전달 받지 않음
 		String username = "facebook_"+(String) userInfo.get("id");
+		// 비번 암호화
 		String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
+		// 페이스북 로그인을 통해 email, name을 받음
 		String email = (String) userInfo.get("email");
 		String name = (String) userInfo.get("name");
-		
+
+		// 페북으로 로그인 한 user를 object에 넣어야 함
 		User userEntity = userRepository.findByUsername(username);
 		
-		if(userEntity == null) { // 페이스북 최초 로그인
+		if(userEntity == null) { // 페이스북 최초 로그인(user 정보 만들기)
 			User user = User.builder()
 					.username(username)
 					.password(password)

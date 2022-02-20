@@ -12,12 +12,13 @@ import com.cos.photogramstart.domain.user.User;
 
 import lombok.Data;
 
-@Data
+@Data //implements UserDetails, OAuth2User -> 일반 회원가입을 하던, 페이스북 회원가입을 하던 모두 PrincipalDetails여기에서 저장, 조회 가능!!
 public class PrincipalDetails implements UserDetails, OAuth2User{
 	
 	private static final long serialVersionUID = 1L;
 	
 	private User user;
+	// 페이스북으로 회원가입 한 경우
 	private Map<String, Object> attributes;
 	
 	public PrincipalDetails(User user) {
@@ -68,6 +69,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User{
 		return true;
 	}
 
+
+	// 페이스북으로 회원가입 한 경우
 	@Override
 	public Map<String, Object> getAttributes() {
 		return attributes;  // {id:343434343, name:최주호, email:ssarmango@nate.com}
